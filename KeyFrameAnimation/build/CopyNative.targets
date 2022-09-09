@@ -1,0 +1,61 @@
+﻿<Project>
+    <PropertyGroup>
+        <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <BuildPlatform>x86</BuildPlatform>
+        <BuildPlatform Condition="'$(PlatformTarget)' == 'Win32'">x86</BuildPlatform>
+        <BuildPlatform Condition="'$(PlatformTarget)' == 'AnyCPU'">x86</BuildPlatform>
+        <BuildPlatform Condition="'$(PlatformTarget)' != 'Win32' and '$(PlatformTarget)' != 'AnyCPU' and '$(PlatformTarget)' !='' ">$(PlatformTarget)</BuildPlatform>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!--<_NativeFiles Include="$(MSBuildThisFileDirectory)..\native\win-$(BuildPlatform)\*.*" />-->
+        <_CSharpFiles Include="$(MSBuildThisFileDirectory)..\lib\$(TargetFrameWork)\*.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!--<_NativePDBFiles Include="$(MSBuildThisFileDirectory)..\pdb\win-$(BuildPlatform)\*.pdb"/>-->
+        <_CSharpPDBFiles Include="$(MSBuildThisFileDirectory)..\lib\$(TargetFrameWork)\*.pdb"/>
+    </ItemGroup>
+
+    <Target Name="MyAfterBuild" AfterTargets="Build">
+        <Message Importance="high" Text="$(MSBuildProjectName) 项目已经加入KeyFrameAnimation模块，BuildPlatform = $(BuildPlatform)" />
+        <CallTarget Targets="CopyBinaryFilesToBuild"></CallTarget>
+        <CallTarget Targets="CopyPDBFilesToOutPut"></CallTarget>
+    </Target>
+
+    <Target Name="MyAfterPublish" AfterTargets="Publish">
+        <CallTarget Targets="CopyBinaryFilesToPublish"></CallTarget>
+        <CallTarget Targets="CopyPDBFilesToPublish"></CallTarget>
+    </Target>
+
+    <Target Name="CopyBinaryFilesToBuild">
+        <Message Condition="'$(OutputPath)' != '' and '$(OutputType)' != 'WinExe'" Importance="high" Text="$(MSBuildProjectName) 项目不是exe项目，自动拷贝.dll到编译输出目录: $(OutputPath)"></Message>
+        <Copy Condition="'$(OutputPath)' != '' and '$(OutputType)' != 'WinExe'" SourceFiles="@(_CSharpFiles)" DestinationFolder="$(OutputPath)"></Copy>
+
+        <Message Condition="'$(OutputPath)' != ''" Importance="high" Text="拷贝native文件到编译输出目录: $(OutputPath)"></Message>
+        <Copy Condition="'$(OutputPath)' != ''" SourceFiles="@(_NativeFiles)" DestinationFolder="$(OutputPath)"></Copy>
+    </Target>
+
+    <Target Name="CopyBinaryFilesToPublish">
+        <Message Condition="'$(PublishDir)' != '' and '$(OutputType)' != 'WinExe'" Importance="high" Text="$(MSBuildProjectName) 项目不是exe项目，自动拷贝.dll到发布目录: $(PublishDir)"></Message>
+        <Copy Condition="'$(PublishDir)' != '' and '$(OutputType)' != 'WinExe'" SourceFiles="@(_CSharpFiles)" DestinationFolder="$(PublishDir)"></Copy>
+
+        <Message Condition="'$(PublishDir)' != ''" Importance="high" Text="拷贝native文件到发布目录: $(PublishDir)"></Message>
+        <Copy Condition="'$(PublishDir)' != ''" SourceFiles="@(_NativeFiles)" DestinationFolder="$(PublishDir)"></Copy>
+    </Target>
+
+    <Target Name="CopyPDBFilesToOutPut">
+        <Message Condition="'$(OutputPath)' != ''" Importance="high" Text="拷贝PDB文件到输出目录: $(OutputPath)"></Message>
+        <Copy Condition="'$(OutputPath)' != ''" SourceFiles="@(_NativePDBFiles)" DestinationFolder="$(OutputPath)"></Copy>
+        <Copy Condition="'$(OutputPath)' != ''" SourceFiles="@(_CSharpPDBFiles)" DestinationFolder="$(OutputPath)"></Copy>
+    </Target>
+
+    <Target Name="CopyPDBFilesToPublish">
+        <Message Condition="'$(PublishDir)' != ''" Importance="high" Text="拷贝PDB文件到发布目录: $(PublishDir)"></Message>
+        <Copy Condition="'$(PublishDir)' != ''" SourceFiles="@(_NativePDBFiles)" DestinationFolder="$(PublishDir)"></Copy>
+        <Copy Condition="'$(PublishDir)' != ''" SourceFiles="@(_CSharpPDBFiles)" DestinationFolder="$(PublishDir)"></Copy>
+    </Target>
+</Project>

@@ -1,2 +1,1 @@
-# ImageFrameAnimation
-WPF帧图动画解析
+WPF 帧图解析播放控件

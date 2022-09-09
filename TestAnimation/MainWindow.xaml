@@ -1,0 +1,19 @@
+﻿<Window x:Class="TestAnimation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestAnimation"
+        xmlns:keyFrameAnimation="clr-namespace:KeyFrameAnimation;assembly=KeyFrameAnimation"
+        mc:Ignorable="d"
+        Background="Black"
+        Title="MainWindow" Height="450" Width="835">
+    <StackPanel>
+        <Button Click="ButtonBase_OnClick1">启动/停止</Button>
+        <!--<Image x:Name="testpic" Height="160" Width="160" keyFrameAnimation:ImageBehavior.SourceKey="test"></Image>-->
+        <local:SpeakingAnimImage x:Name="SpeakingAnimImage" Width="160" Height="160" IsSpeaking="{Binding bIsSpeaking}"/>
+        <!--<Button Click="ButtonBase_OnClick">展示/隐藏</Button>-->
+        <!--<local:Animations x:Name="ani"></local:Animations>-->
+        <!--<local:SpeakingAnimImageTimer x:Name="SpeakingAnimImageTimer" Width="160" Height="160" IsSpeaking="{Binding bIsSpeaking}"/>-->
+    </StackPanel>
+</Window>

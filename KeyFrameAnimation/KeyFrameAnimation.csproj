@@ -10,10 +10,10 @@
         <IncludeBuildOutput>true</IncludeBuildOutput>
         <PackageId>KeyFrameAnimation</PackageId>
         <Version>1.0.0</Version>
-        <Authors>yangjunxin@huya.com</Authors>
-        <Company>虎牙科技</Company>
+        <Authors>shaw-xw@outlook.com</Authors>
+        <Company>Github</Company>
         <Description>创建帧动画</Description>
-        <PackageProjectUrl>https://git.huya.com/huyapc/KeyFrameAnimation</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/KikyoShaw/ImageFrameAnimation</RepositoryUrl>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
     <ItemGroup>
